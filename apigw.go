@@ -1,4 +1,4 @@
-package apigateway
+package awshelper
 
 import (
 	"encoding/json"
