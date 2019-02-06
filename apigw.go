@@ -17,6 +17,12 @@ func GetAPIGatewayProxyResponse200(body interface{}) (events.APIGatewayProxyResp
 	}, nil
 }
 
+func GetAPIGatewayProxyResponse204() (events.APIGatewayProxyResponse, error) {
+	return events.APIGatewayProxyResponse{
+		StatusCode: 204,
+	}, nil
+}
+
 func GetAPIGatewayProxyResponse400() (events.APIGatewayProxyResponse, error) {
 	responseJson, _ := json.Marshal(
 		&APIGatewayProxyResponseError{

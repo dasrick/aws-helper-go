@@ -32,6 +32,23 @@ func TestGetAPIGatewayProxyResponse200(t *testing.T) {
 	}
 }
 
+func TestGetAPIGatewayProxyResponse204(t *testing.T) {
+	var tests = []struct {
+		expect events.APIGatewayProxyResponse
+	}{
+		{
+			expect: events.APIGatewayProxyResponse{
+				StatusCode:      204,
+				IsBase64Encoded: false,
+			},
+		},
+	}
+	for _, test := range tests {
+		response, _ := GetAPIGatewayProxyResponse204()
+		assert.Equal(t, test.expect, response)
+	}
+}
+
 func TestGetAPIGatewayProxyResponse400(t *testing.T) {
 	var tests = []struct {
 		request interface{}
