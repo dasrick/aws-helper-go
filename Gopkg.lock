@@ -10,7 +10,7 @@
   version = "v1.8.2"
 
 [[projects]]
-  digest = "1:aa4336a12b1b2ab9ba4173c395db8c2db55a86474d6e77db43620aceb2e8e0fe"
+  digest = "1:97fd28378ce398ad98743d260fcaf3ccc9ca4f06add2f4b308e082e166103304"
   name = "github.com/aws/aws-sdk-go"
   packages = [
     "aws",
@@ -33,19 +33,24 @@
     "aws/session",
     "aws/signer/v4",
     "internal/ini",
+    "internal/s3err",
     "internal/sdkio",
     "internal/sdkrand",
     "internal/sdkuri",
     "internal/shareddefaults",
     "private/protocol",
+    "private/protocol/eventstream",
+    "private/protocol/eventstream/eventstreamapi",
     "private/protocol/json/jsonutil",
     "private/protocol/jsonrpc",
     "private/protocol/query",
     "private/protocol/query/queryutil",
     "private/protocol/rest",
+    "private/protocol/restxml",
     "private/protocol/xml/xmlutil",
     "service/dynamodb",
     "service/dynamodb/dynamodbattribute",
+    "service/s3",
     "service/sts",
   ]
   pruneopts = "UT"
@@ -92,6 +97,7 @@
     "github.com/aws/aws-sdk-go/aws/session",
     "github.com/aws/aws-sdk-go/service/dynamodb",
     "github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute",
+    "github.com/aws/aws-sdk-go/service/s3",
     "github.com/stretchr/testify/assert",
   ]
   solver-name = "gps-cdcl"
