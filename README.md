@@ -9,4 +9,16 @@
 
 ...
 
-## ...
+## Getting started
+
+To get the package, execute:
+
+```
+go get gopkg.in/dasrick/aws-helper-go.v1
+```
+
+To import this package, add the following line to your code:
+
+```
+import "gopkg.in/dasrick/aws-helper-go.v1"
+```
