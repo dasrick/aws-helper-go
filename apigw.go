@@ -11,7 +11,7 @@ type APIGatewayProxyResponseError struct {
 	Message string `json:"message"`
 }
 
-// GetAPIGatewayProxyResponse200 ...
+// GetAPIGatewayProxyResponse200 ... send sucess with body (stringyfied JSON)
 func GetAPIGatewayProxyResponse200(body interface{}) (events.APIGatewayProxyResponse, error) {
 	responseJSON, _ := json.Marshal(body)
 	return events.APIGatewayProxyResponse{
@@ -24,14 +24,14 @@ func GetAPIGatewayProxyResponse200(body interface{}) (events.APIGatewayProxyResp
 	}, nil
 }
 
-// GetAPIGatewayProxyResponse204 ...
+// GetAPIGatewayProxyResponse204 ... send sucess without body
 func GetAPIGatewayProxyResponse204() (events.APIGatewayProxyResponse, error) {
 	return events.APIGatewayProxyResponse{
 		StatusCode: 204,
 	}, nil
 }
 
-// GetAPIGatewayProxyResponse400 ...
+// GetAPIGatewayProxyResponse400 ... send Bad Request and log error
 func GetAPIGatewayProxyResponse400(error interface{}) (events.APIGatewayProxyResponse, error) {
 	log.Println(error)
 	responseJSON, _ := json.Marshal(
@@ -44,7 +44,7 @@ func GetAPIGatewayProxyResponse400(error interface{}) (events.APIGatewayProxyRes
 	}, nil
 }
 
-// GetAPIGatewayProxyResponse500 ...
+// GetAPIGatewayProxyResponse500 ... send Internal Server Error and log error
 func GetAPIGatewayProxyResponse500(error interface{}) (events.APIGatewayProxyResponse, error) {
 	log.Println(error)
 	responseJSON, _ := json.Marshal(
