@@ -3,13 +3,14 @@ package awshelper
 import (
 	"encoding/json"
 	"github.com/aws/aws-lambda-go/events"
+	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func getBody(body interface{}) string {
-	responseJson, _ := json.Marshal(body)
-	return string(responseJson)
+	responseJSON, _ := json.Marshal(body)
+	return string(responseJSON)
 }
 
 func TestGetAPIGatewayProxyResponse200(t *testing.T) {
@@ -55,6 +56,7 @@ func TestGetAPIGatewayProxyResponse400(t *testing.T) {
 		expect  events.APIGatewayProxyResponse
 	}{
 		{
+			request: errors.New("whatever the message was"),
 			expect: events.APIGatewayProxyResponse{
 				StatusCode:      400,
 				IsBase64Encoded: false,
@@ -63,7 +65,7 @@ func TestGetAPIGatewayProxyResponse400(t *testing.T) {
 		},
 	}
 	for _, test := range tests {
-		response, _ := GetAPIGatewayProxyResponse400()
+		response, _ := GetAPIGatewayProxyResponse400(test.request)
 		assert.Equal(t, test.expect, response)
 	}
 }
@@ -74,6 +76,7 @@ func TestGetAPIGatewayProxyResponse500(t *testing.T) {
 		expect  events.APIGatewayProxyResponse
 	}{
 		{
+			request: errors.New("whatever the message was"),
 			expect: events.APIGatewayProxyResponse{
 				StatusCode:      500,
 				IsBase64Encoded: false,
@@ -82,7 +85,7 @@ func TestGetAPIGatewayProxyResponse500(t *testing.T) {
 		},
 	}
 	for _, test := range tests {
-		response, _ := GetAPIGatewayProxyResponse500()
+		response, _ := GetAPIGatewayProxyResponse500(test.request)
 		assert.Equal(t, test.expect, response)
 	}
 }

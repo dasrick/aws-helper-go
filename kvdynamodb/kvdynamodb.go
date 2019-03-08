@@ -8,22 +8,26 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 )
 
+// Client ...
 type Client struct {
 	svc       *dynamodb.DynamoDB
 	tableName string
 	hashKey   string
 }
 
+// Options of the client
 type Options struct {
 	Region    string
 	TableName string
 	HashKey   string
 }
 
+// DefaultOptions of the client
 var DefaultOptions = Options{
 	Region: "eu-west-1",
 }
 
+// NewClient ...
 func NewClient(options Options) (Client, error) {
 	client := Client{}
 	// check incoming values and use default as fallback
@@ -47,6 +51,7 @@ func NewClient(options Options) (Client, error) {
 	return client, nil
 }
 
+// Get ...
 func (c Client) Get(k string, v interface{}) (bool, error) {
 	resultOutput, err := c.svc.GetItem(&dynamodb.GetItemInput{
 		TableName: aws.String(c.tableName),
@@ -65,6 +70,7 @@ func (c Client) Get(k string, v interface{}) (bool, error) {
 	return true, dynamodbattribute.UnmarshalMap(resultOutput.Item, v)
 }
 
+// Store ...
 func (c Client) Store(k string, v interface{}) error {
 	item, err := dynamodbattribute.MarshalMap(v)
 	if err != nil {
@@ -77,6 +83,7 @@ func (c Client) Store(k string, v interface{}) error {
 	return err
 }
 
+// Delete ...
 func (c Client) Delete(k string) error {
 	_, err := c.svc.DeleteItem(&dynamodb.DeleteItemInput{
 		TableName: aws.String(c.tableName),
@@ -89,6 +96,7 @@ func (c Client) Delete(k string) error {
 	return err
 }
 
+// Close ...
 func (c Client) Close() error {
 	return nil
 }
