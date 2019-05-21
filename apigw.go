@@ -2,8 +2,9 @@ package awshelper
 
 import (
 	"encoding/json"
-	"github.com/aws/aws-lambda-go/events"
 	"log"
+
+	"github.com/aws/aws-lambda-go/events"
 )
 
 // APIGatewayProxyResponseError ... basic structure of error
@@ -41,6 +42,19 @@ func GetAPIGatewayProxyResponse400(error interface{}) (events.APIGatewayProxyRes
 	return events.APIGatewayProxyResponse{
 		Body:       string(responseJSON),
 		StatusCode: 400,
+	}, nil
+}
+
+// GetAPIGatewayProxyResponse404 ... send Not Found and log error
+func GetAPIGatewayProxyResponse404(error interface{}) (events.APIGatewayProxyResponse, error) {
+	log.Println(error)
+	responseJSON, _ := json.Marshal(
+		&APIGatewayProxyResponseError{
+			Message: "Not Found",
+		})
+	return events.APIGatewayProxyResponse{
+		Body:       string(responseJSON),
+		StatusCode: 404,
 	}, nil
 }
 

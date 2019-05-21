@@ -2,10 +2,11 @@ package awshelper
 
 import (
 	"encoding/json"
+	"testing"
+
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func getBody(body interface{}) string {
@@ -66,6 +67,26 @@ func TestGetAPIGatewayProxyResponse400(t *testing.T) {
 	}
 	for _, test := range tests {
 		response, _ := GetAPIGatewayProxyResponse400(test.request)
+		assert.Equal(t, test.expect, response)
+	}
+}
+
+func TestGetAPIGatewayProxyResponse404(t *testing.T) {
+	var tests = []struct {
+		request interface{}
+		expect  events.APIGatewayProxyResponse
+	}{
+		{
+			request: errors.New("whatever the message was"),
+			expect: events.APIGatewayProxyResponse{
+				StatusCode:      404,
+				IsBase64Encoded: false,
+				Body:            getBody(APIGatewayProxyResponseError{Message: "Not Found"}),
+			},
+		},
+	}
+	for _, test := range tests {
+		response, _ := GetAPIGatewayProxyResponse404(test.request)
 		assert.Equal(t, test.expect, response)
 	}
 }
